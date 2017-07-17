@@ -37,6 +37,18 @@ const index = require('./routes/index');
 const diet = require('./routes/diet');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
+app.use('/', index);
+app.use('/diets', diet);
+app.use('/auth', auth);
+app.use('/user', user);
+
+app.use(session({
+  secret: "lkashjdflkjsfsdfhaslkdjfhalsdf",
+  resave: true,
+  saveUninitialized: true
+}));
+
+require('./passport/local');
 
 app.use(passport.initialize());
 app.use(passport.session());
