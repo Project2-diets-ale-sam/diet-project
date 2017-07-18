@@ -10,7 +10,7 @@ const debug = require('debug')(`DietsApp:${path.basename(__filename).split('.')[
 const passport = require("passport");
 const session = require("express-session");
 const flash = require("connect-flash");
-const MongoStore = require("mongo-store");
+const MongoStore = require("connect-mongo")(session);
 
 mongoose.connect('mongodb://localhost/dietsapp').then(() => debug('DB Conected! =)'));
 
@@ -30,26 +30,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('layout', 'layout/main');
 app.use(layouts);
 
 app.use(flash());
 app.use(session({
-  secret: "lkashjdflkjhaslkdjfhalsdf",
-  resave: true,
-  saveUninitialized: true,
-/*  store: new MongoStore({
-   mongooseConnection: mongoose.connection,
-   ttl: 24 * 60 * 60 // 1 day
- })*/
+  secret: "basic-auth-secret",
+  cookie: { maxAge: 60000 },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60 // 1 day
+  })
 }));
-
 require('./passport/local');
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 //Require routes
 const index = require('./routes/index');
 const diet = require('./routes/diet');

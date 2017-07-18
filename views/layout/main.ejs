@@ -29,12 +29,12 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-            <% if(user) { %>
-              <li><a href="/auth/login">LOGOUT</a></li>
-              <li><a href="/auth/signup">PROFILE</a></li>
+            <% if(typeof session == "undefined") { %>
+              <li><a href="/auth/login">LOGIN</a></li>
+              <li><a href="/auth/signup">SIGN-UP</a></li>
               <% }else{ %>
-                <li><a href="/auth/login">LOGIN</a></li>
-                <li><a href="/auth/signup">SIGN-UP</a></li>
+                <li><a href="/auth/logout">LOGOUT</a></li>
+                <li><a href="/user/<%= session %>">PROFILE</a></li>
                 <% } %>
         </ul>
       </div>

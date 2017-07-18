@@ -54,7 +54,8 @@ authRoutes.post("/signup", (req, res, next) => {
 
 authRoutes.get("/login", (req, res, next) => {
   res.render("auth/login",{
-    message: req.flash("error")
+    message: req.flash("error"),
+    user: req.user
   });
 });
 
@@ -67,7 +68,7 @@ authRoutes.post("/login", passport.authenticate("local", {
 
 authRoutes.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/auth/login");
+  res.redirect("/");
 });
 
 module.exports = authRoutes;
