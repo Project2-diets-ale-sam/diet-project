@@ -1,0 +1,20 @@
+<div class="wrapper-login">
+  <form class="form-signin" action="/auth/signup" method="POST">
+    <h2 class="form-signin-heading">Register form</h2>
+
+    <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
+    <input type="password" class="form-control" name="password" placeholder="Password" required="" />
+
+    <input type="text" class="form-control" name="name" placeholder="Name" required="" autofocus="" />
+
+    <input type="email" class="form-control" name="email" placeholder="Email" required="" />
+
+    <button class="btn btn-lg btn-primary btn-block" id="btnlogin" type="submit">Register</button>
+    <% if (typeof message != "undefined") { %>
+      <div class="error-message">
+        <%= message %>
+      </div>
+      <% } %>
+  </form>
+
+</div>

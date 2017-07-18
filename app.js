@@ -9,6 +9,8 @@ const mongoose = require('mongoose');
 const debug = require('debug')(`DietsApp:${path.basename(__filename).split('.')[0]}`);
 const passport = require("passport");
 const session = require("express-session");
+const flash = require("connect-flash");
+const MongoStore = require("mongo-store");
 
 mongoose.connect('mongodb://localhost/dietsapp').then(() => debug('DB Conected! =)'));
 
@@ -33,6 +35,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('layout', 'layout/main');
 app.use(layouts);
 
+app.use(flash());
+app.use(session({
+  secret: "lkashjdflkjhaslkdjfhalsdf",
+  resave: true,
+  saveUninitialized: true,
+/*  store: new MongoStore({
+   mongooseConnection: mongoose.connection,
+   ttl: 24 * 60 * 60 // 1 day
+ })*/
+}));
+
+require('./passport/local');
+
+app.use(passport.initialize());
+app.use(passport.session());
 //Require routes
 const index = require('./routes/index');
 const diet = require('./routes/diet');
@@ -42,7 +59,6 @@ app.use('/', index);
 app.use('/diets', diet);
 app.use('/auth', auth);
 app.use('/user',user);
-
 require('./config/error-handler')(app);
 
 module.exports = app;

@@ -38,8 +38,8 @@ router.get('/:id', function(req, res, next) {
     if(err){
       console.log(err);
     }
-    res.render('productDetail', {
-      title: 'Express Marc',
+    res.render('user/profile', {
+      title: 'Profile',
       user: u
     });
   });

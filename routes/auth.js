@@ -5,30 +5,29 @@ const path = require('path');
 const debug = require('debug')('DietsApp:'+path.basename(__filename));
 const User       = require("../models/User");
 const authRoutes = express.Router();
-const multer  = require('multer');
-const upload = multer({ dest: './public/uploads/' });
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
+const flash = require("connect-flash");
 
 authRoutes.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup", {user: req.user});
 });
 
 authRoutes.post("/signup", (req, res, next) => {
-  debug("Entra");
   const username = req.body.username;
   const password = req.body.password;
   const name = req.body.name;
   const email = req.body.email;
+  console.log(req.body);
   if (username === "" || password === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
+    res.render("auth/signup", { message: "Indicate username and password" , user:req.user});
     return;
   }
 
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup", { message: "The username already exists" });
+      res.render("auth/signup", { message: "The username already exists" , user:req.user});
       return;
     }
 
@@ -43,7 +42,7 @@ authRoutes.post("/signup", (req, res, next) => {
 
     newUser.save((err,user) => {
       if (err) {
-        res.render("auth/signup", { message: "Something went wrong" });
+        res.render("auth/signup", { message: "Something went wrong" , user: req.user});
       } else {
         debug("Se ha creado el usuario");
         debug(user);
@@ -60,7 +59,6 @@ authRoutes.get("/login", (req, res, next) => {
 });
 
 authRoutes.post("/login", passport.authenticate("local", {
-
   successRedirect: "/",
   failureRedirect: "/auth/login",
   passReqToCallback: true,
