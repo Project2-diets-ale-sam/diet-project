@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const debug = require('debug')(`DietsApp:${path.basename(__filename).split('.')[0]}`);
 const passport = require("passport");
 const session = require("express-session");
+
 mongoose.connect('mongodb://localhost/dietsapp').then(() => debug('DB Conected! =)'));
 
 const app = express();
@@ -40,34 +41,8 @@ const user = require('./routes/user');
 app.use('/', index);
 app.use('/diets', diet);
 app.use('/auth', auth);
-app.use('/user', user);
+app.use('/user',user);
 
-app.use(session({
-  secret: "lkashjdflkjsfsdfhaslkdjfhalsdf",
-  resave: true,
-  saveUninitialized: true
-}));
-
-require('./passport/local');
-
-app.use(passport.initialize());
-app.use(passport.session());
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+require('./config/error-handler')(app);
 
 module.exports = app;
