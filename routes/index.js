@@ -3,8 +3,14 @@ const router  = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+  console.log(req.user + " user");
+  if (req.user) {
+    req.session.currentUser = req.user;
+    res.render('index', {session: req.session.currentUser });
+  }else {
+    res.render('index', {session: undefined });
+  }
 
-  res.render('index', { title: 'Express', session: req.session.passport.user });
 });
 
 module.exports = router;

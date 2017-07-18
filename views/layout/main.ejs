@@ -29,13 +29,14 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-            <% if(typeof session == "undefined") { %>
-              <li><a href="/auth/login">LOGIN</a></li>
-              <li><a href="/auth/signup">SIGN-UP</a></li>
-              <% }else{ %>
-                <li><a href="/auth/logout">LOGOUT</a></li>
-                <li><a href="/user/<%= session %>">PROFILE</a></li>
-                <% } %>
+          <% if(typeof session == "undefined") { %>
+            <li><a href="/auth/login">LOGIN</a></li>
+            <li><a href="/auth/signup">SIGN-UP</a></li>
+            <% }else{ %>
+              <li><a href="/auth/logout">LOGOUT</a></li>
+              <li><a href="/user/<%= session._id %>">PROFILE</a></li>
+
+              <% } %>
         </ul>
       </div>
     </div>
@@ -48,9 +49,8 @@
      </a>
       <p>tuDIETA. 2017© </p>
     </footer>
-<script type="text/javascript" src="/javascripts/profile.js">
-
-</script>
+    <script type="text/javascript" src="/javascripts/profile.js">
+    </script>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

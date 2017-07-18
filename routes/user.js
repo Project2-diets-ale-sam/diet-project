@@ -40,7 +40,8 @@ router.get('/:id', function(req, res, next) {
     }
     res.render('user/profile', {
       title: 'Profile',
-      user: u
+      user: u,
+      session: req.session.currentUser
     });
   });
 });

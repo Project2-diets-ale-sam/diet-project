@@ -44,11 +44,12 @@ app.use(session({
     ttl: 24 * 60 * 60 // 1 day
   })
 }));
+app.use(cookieParser());
 require('./passport/local');
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser());
+
 //Require routes
 const index = require('./routes/index');
 const diet = require('./routes/diet');
