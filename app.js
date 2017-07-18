@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'tuDIETA';
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -30,6 +30,9 @@ app.set('layout','layout/main');
 app.use(layouts);
 
 const index = require('./routes/index');
+app.use('/', index);
+
+const recipe = require('./routes/index');
 app.use('/', index);
 
 // catch 404 and forward to error handler
