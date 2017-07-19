@@ -50,12 +50,18 @@ Diet.findByIdAndUpdate(req.params.id, updates, (err, d) => {
 /* POST a new diet*/
 router.post('/new', upload.single('photo'), (req, res, next) => {
 //TODO create the new diet and insert it on Mongo
+
+let creatorId = req.session.passport.user;
+console.log(creatorId);
 let d = new Diet({
+    _creator: creatorId,
     name: req.body.name,
     categories: req.body.categories,
-//    picture: req.file.picture,
+    picture: req.file.filename,
+    aim: req.body.aim,
     description: req.body.description
   });
+  console.log(d);
   d.save((err, obj) => {
     res.redirect('/');
   });
@@ -66,7 +72,7 @@ let d = new Diet({
 /* Get the form to create a new diet*/
 router.get('/new', (req, res, next) => {
 //TODO render new.ejs form and check if the user is login in.
-  res.render('/diets/new');
+  res.render('diets/create');
 });
 
 
