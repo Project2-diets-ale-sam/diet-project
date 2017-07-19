@@ -222,6 +222,17 @@ body {
   color: #E35C48;
   border: 1px solid #E35C48;
 }
+.btn-primary:active {
+  background: #fff;
+  color: #E35C48;
+  border: 1px solid #E35C48;
+}
+
+.btn-primary:focus {
+  background: #fff;
+  color: #E35C48;
+  border: 1px solid #E35C48;
+}
 
 .form-control {
   margin-top: 10px;
@@ -265,7 +276,9 @@ body {
 
 
 /* User profile styles*/
-
+.photoInput{
+  margin-left: 35%;
+}
 .wrapper-profile {
   margin-top: 8%;
 }

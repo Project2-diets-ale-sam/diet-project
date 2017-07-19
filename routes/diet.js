@@ -66,7 +66,7 @@ let d = new Diet({
 /* Get the form to create a new diet*/
 router.get('/new', (req, res, next) => {
 //TODO render new.ejs form and check if the user is login in.
-  res.render('/');
+  res.render('/diets/new');
 });
 
 

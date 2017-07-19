@@ -3,6 +3,8 @@ const User = require('../models/User');
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
+var multer  = require('multer');
+var upload = multer({ dest: './public/uploads/' });
 // CRUD => R: Retrieve All Users ¿??
 router.get('/', function(req, res, next) {
   User.find({}, (err, u) => {
@@ -14,14 +16,16 @@ router.get('/', function(req, res, next) {
 });
 
 // CRUD => U: Update a product
-router.post('/:id/edit', function(req, res, next) {
-  const password = req.body.password;
-  const salt = bcrypt.genSaltSync(bcryptSalt);
-  const hashPass = bcrypt.hashSync(password, salt);
+router.post('/:id/edit',upload.single('photo'), function(req, res, next) {
+/*  const salt = bcrypt.genSaltSync(bcryptSalt);
+  const hashPass = bcrypt.hashSync(password, salt);*/
+  console.log("entra en edit");
   let updates = {
     name: req.body.name,
-    password: hashPass,
+    lastname: req.body.lastname,
+    personalWeb: req.body.personalWeb,
     email: req.body.email,
+    picture: req.file.filename,
     description: req.body.description
   };
   User.findByIdAndUpdate(req.params.id, updates, (err, p) => {
