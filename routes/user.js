@@ -4,8 +4,10 @@ const Diet = require('../models/Diet');
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
-var multer  = require('multer');
-var upload = multer({ dest: './public/uploads/' });
+var multer = require('multer');
+var upload = multer({
+  dest: './public/uploads/'
+});
 // CRUD => R: Retrieve All Users ¿??
 router.get('/', function(req, res, next) {
 
@@ -18,9 +20,9 @@ router.get('/', function(req, res, next) {
 });
 
 // CRUD => U: Update a product
-router.post('/:id/edit',upload.single('photo'), function(req, res, next) {
-/*  const salt = bcrypt.genSaltSync(bcryptSalt);
-  const hashPass = bcrypt.hashSync(password, salt);*/
+router.post('/:id/edit', upload.single('photo'), function(req, res, next) {
+  /*  const salt = bcrypt.genSaltSync(bcryptSalt);
+    const hashPass = bcrypt.hashSync(password, salt);*/
   console.log("entra en edit");
   let updates = {
     name: req.body.name,
@@ -31,7 +33,7 @@ router.post('/:id/edit',upload.single('photo'), function(req, res, next) {
     description: req.body.description
   };
   User.findByIdAndUpdate(req.params.id, updates, (err, p) => {
-    if(err){
+    if (err) {
       console.log(err);
     }
     res.redirect(`/`);
@@ -39,27 +41,29 @@ router.post('/:id/edit',upload.single('photo'), function(req, res, next) {
 });
 // CRUD => R: Retrieve - User detail
 router.get('/:id', function(req, res, next) {
-//  var q1 = mongoose.model('User');
-//  var q2 = mongoose.model('Diet');
+  //  var q1 = mongoose.model('User');
+  //  var q2 = mongoose.model('Diet');
 
-User.findById(req.params.id,function (err, u) {
-        Diet.find({_creator:req.params.id},function (err, diets) {
-            res.render('user/profile', {
-                user : u,
-                diets : diets,
-                session: req.session.currentUser
-            });
-        });
-/*  User.findById(req.params.id, (err, u) => {
-    if(err){
-      console.log(err);
-    }
-    res.render('user/profile', {
-      title: 'Profile',
-      user: u,
-      session: req.session.currentUser
+  User.findById(req.params.id, function(err, u) {
+    Diet.find({
+      _creator: req.params.id
+    }, function(err, diets) {
+      res.render('user/profile', {
+        user: u,
+        diets: diets,
+        session: req.session.currentUser
+      });
     });
-  });*/
-});
+    /*  User.findById(req.params.id, (err, u) => {
+        if(err){
+          console.log(err);
+        }
+        res.render('user/profile', {
+          title: 'Profile',
+          user: u,
+          session: req.session.currentUser
+        });
+      });*/
+  });
 });
 module.exports = router;
