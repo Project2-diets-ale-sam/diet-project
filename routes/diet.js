@@ -7,7 +7,7 @@ const upload = multer({ dest: './public/uploads/' });
 /* GET All the diets -> Diet.find() */
 router.get('/', (req, res, next) => {
   Diet.find({}, (err, diets) => {
-    res.render('index', {
+    res.render('diets/diets', {
       diets: diets
     });
   });
